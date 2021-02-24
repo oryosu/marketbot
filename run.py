@@ -4,7 +4,7 @@ import slackweb
 from information import get_moving_average, golden_crossover, dead_crossover, get_fundametals, get_datas
 
 def main():
-    slack = slackweb.Slack(url="https://hooks.slack.com/services/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")
+    slack = slackweb.Slack(url=os.environ['SLACKWEB_ANDDATA_MARKETBOT'])
     with open('tosho.list', 'r') as f:
         codes = f.read().splitlines()
     datas = get_datas(codes)
