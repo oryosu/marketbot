@@ -9,11 +9,10 @@ def main():
     with open('tosho.list', 'r') as f:
         codes = f.read().splitlines()
     datas = get_datas(codes)
-    for code, data in zip(codes, datas):
-        print(code, data)
+    for code in codes:
         attachments = []
         company_name, infos = get_fundametals(code)
-        series1, series2, series3 = get_moving_average(data)
+        series1, series2, series3 = get_moving_average(datas[code])
         if golden_crossover(series1, series2, series3):
             attachment = {"title": company_name,
                           "color": "good",

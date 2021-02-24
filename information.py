@@ -5,10 +5,8 @@ import numpy as np
 from bs4 import BeautifulSoup
 
 def get_datas(codes):
-    stcodes = ['{}.JP'.format(str(code)) for code in codes[:10]]
-    print(stcodes)
+    stcodes = ['{}.JP'.format(str(code)) for code in codes]
     datas = web.DataReader(stcodes, 'stooq')
-    print(datas)
     return web.DataReader(stcodes, 'stooq')["Close"][-200:]
 
 def get_moving_average(data):
