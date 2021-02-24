@@ -5,7 +5,7 @@ import numpy as np
 from bs4 import BeautifulSoup
 
 def get_datas(codes):
-    stcodes = ['{}.JP'.format(code) for code in codes[:10]]
+    stcodes = ['{}.JP'.format(str(code)) for code in codes[:10]]
     print(stcodes)
     datas = web.DataReader(stcodes, 'stooq')
     print(datas)
