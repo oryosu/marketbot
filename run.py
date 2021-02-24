@@ -1,5 +1,6 @@
 # coding: utf-8
 
+import os
 import slackweb
 from information import get_moving_average, golden_crossover, dead_crossover, get_fundametals, get_datas
 
