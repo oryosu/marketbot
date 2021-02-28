@@ -1,13 +1,14 @@
 import requests
-import pandas_datareader.data as web
+import investpy
+import datetime
 import pandas as pd
 import numpy as np
 from bs4 import BeautifulSoup
 
-def get_datas(codes):
-    stcodes = ['{}.JP'.format(str(code)) for code in codes]
-    datas = web.DataReader(stcodes, 'stooq')
-    return web.DataReader(stcodes, 'stooq')["Close"][-200:]
+def get_data(code):
+    td = datetime.timedelta(days=200)
+    today = datetime.datetime.today()
+    return investpy.get_stock_historical_data(stock=code, country='japan', from_date=(today-td).strftime('%d/%m/%Y'), to_date=today.strftime('%d/%m/%Y'))
 
 def get_moving_average(data):
     # 25日平均線
@@ -25,9 +26,9 @@ def golden_crossover(series1: pd.Series, series2: pd.Series, series3: pd.Series)
     if(series1.size < 2):
         return False
     try:
-        return (series1[0] < series2[0] and series1[1] > series2[1]) or \
-                    (series2[0] < series3[0] and series2[1] > series3[1]) or \
-                        (series1[0] < series3[0] and series1[1] > series3[1])
+        return (series1[-1] < series2[-1] and series1[-2] > series2[-2]) or \
+                    (series2[-1] < series3[-1] and series2[-2] > series3[-2]) or \
+                        (series1[-1] < series3[-1] and series1[-2] > series3[-2])
     except IndexError:
         return False
 
@@ -38,9 +39,9 @@ def dead_crossover(series1: pd.Series, series2: pd.Series, series3: pd.Series) -
     if(series1.size < 2):
         return False
     try:
-        return (series1[0] > series2[0] and series1[1] < series2[1]) or \
-                    (series2[0] > series3[0] and series2[1] < series3[1]) or \
-                        (series1[0] > series3[0] and series1[1] < series3[1])
+        return (series1[-1] > series2[-1] and series1[-2] < series2[-2]) or \
+                    (series2[-1] > series3[-1] and series2[-2] < series3[-2]) or \
+                        (series1[-1] > series3[-1] and series1[-2] < series3[-2])
     except IndexError:
         return False
 
